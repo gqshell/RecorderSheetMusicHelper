@@ -123,7 +123,7 @@ class RecorderSong:
     def __init__(self, sequence_of_notes=None):
         self._fingering_chart = RecorderFingeringChart()
         if sequence_of_notes is not None:
-            self.build_from_string(sequence_of_notes)
+            self.append_string(sequence_of_notes)
 
     def add_note(self, note):
         self._song.append(note)
@@ -266,7 +266,17 @@ class SongPrinter:
         cv2.ellipse(self._canvas, (int(x), int(y)), (int(radius), int(radius)), 0, 0, 360, (0,0,0), 1)
 
 
-#song = RecorderSong("D C# C B G D G B G D B G F# G A G F# G D B G F# E F# G A B C B A D C# D F# D C A F# D B G D G B G D B G F# G A G F# G D B G B C D G D C A F# G A G F# G A G F# D D C B G F# G A G F# D D C# E D F# E D C# D A G F# D C B G F# G A G F# A D F# E D C# E D C B G D G B G D B G F G A G F# G D B G F# E F# G A B C B A D C# D F# D C A F# D B G D G B G D B G F# G A G F# G D B G B C D G D C A F# G A G F# G")
-song = RecorderSong()
-song.append_from_file("Spongebob.txt")
-printer = SongPrinter(song, 1024, "Spongebob.png")
+# Example 1
+# Basic example. First part of Gravity Falls intro.
+# A song is read from a given string and then visually represented on a page with default width.
+# If filename is specified, a picture is saved. In this instance the output file is GravityFallsExample.png
+
+song = RecorderSong("D E F A G A C D E F E G A G F")
+printer = SongPrinter(song, filename="GravityFallsExample.png")
+
+# Example 2
+# Krusty Krabs theme read from file and printed on a page with width 1024px, which then saved as Spongebob.png
+
+# song = RecorderSong()
+# song.append_from_file("Spongebob.txt")
+# printer = SongPrinter(song, 1024, "Spongebob.png")
