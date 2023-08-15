@@ -20,7 +20,7 @@ class Note:
     def compare_holes(self, holes):
         if self._holes.__len__() != holes.__len__():
             return False
-        for i in xrange(holes.__len__()):
+        for i in range(holes.__len__()):
             if self._holes[i] != holes[i]:
                 return False
         return True
@@ -87,14 +87,14 @@ class RecorderFingeringChart:
 
     def add_note(self, note):
         if np.array(note.get_holes()).max() > 1:
-            print "Invalid hole status, status must be in [0, 1]"
+            print( "Invalid hole status, status must be in [0, 1]" )
         else:
             self.get_notes().append(note)
 
     def find_note_by_holes(self, holes):
         """Finds an object of Note class with matching holes in the 'notes' array.
         Returns Object if found, None otherwise."""
-        for i in xrange(self._notes.__len__()):
+        for i in range(self._notes.__len__()):
             note = self._notes[i]
             if note.compare_holes(holes):
                 return i, note
@@ -105,7 +105,7 @@ class RecorderFingeringChart:
             alias = name
         else:
             alias = name[0]
-        for i in xrange(self.get_notes().__len__()):
+        for i in range(self.get_notes().__len__()):
             note = self.get_notes()[i]
             if note.compare_name(alias):
                 return i, note
@@ -130,7 +130,7 @@ class RecorderSong:
 
     def get_note(self, index):
         if index < 0 or index >= self._song.__len__():
-            print "Index is out of bounds, %d" % index
+            print( "Index is out of bounds, %d" % index )
             return None
         return self._song[index]
 
@@ -149,7 +149,7 @@ class RecorderSong:
             junk = 0
             junk, note = self._fingering_chart.find_note_by_name(substr)
             if junk < 0:
-                print "There is no such note in the Recorder Fingering Chart: %s" % substr
+                print( "There is no such note in the Recorder Fingering Chart: %s" % substr )
             else:
                 self.add_note(note)
 
@@ -160,7 +160,7 @@ class RecorderSong:
 
     def to_string(self):
         s = ""
-        for i in xrange(self.length()):
+        for i in range(self.length()):
             s = s + self.get_song()[i].get_name()[0] + " "
         return s
 
@@ -180,14 +180,14 @@ class SongPrinter:
         if notes_per_line is not None:
             self._blocks_per_line = notes_per_line
         self._block_width = int (round ((width - width * self._page_margin * 2) / float(self._blocks_per_line)))
-        rows = song.length() / self._blocks_per_line
+        rows = int(song.length() / self._blocks_per_line)
         if song.length() % self._blocks_per_line > 0:
             rows = rows + 1
         height = int(width * self._page_margin * 2 + rows * self._block_height + (rows - 1) * self._vspacing)
         self._canvas = np.zeros([height, width, 3], dtype=np.uint8)
         self._canvas[:] = 255
-        for i in xrange(rows):
-            for j in xrange(self._blocks_per_line):
+        for i in range(rows):
+            for j in range(self._blocks_per_line):
                 index = i * self._blocks_per_line + j
                 note = song.get_note(index)
                 if note is None:
@@ -210,7 +210,7 @@ class SongPrinter:
 
     def _draw_staff(self, x, y, note):
         # draw basic staff
-        for i in xrange(5):
+        for i in range(5):
             p1 = (int(x), int(y + i * self._staff_spacing))
             p2 = (int(x + self._block_width), int(y + i * self._staff_spacing))
             cv2.line(self._canvas, p1, p2, (0,0,0), 1)
@@ -227,13 +227,13 @@ class SongPrinter:
         # draw extended staff if needed :
         # below basic staff
         if note.get_staff_pos() > 4:
-            for i in xrange((note.get_staff_pos() - 4) / 2):
+            for i in range(int((note.get_staff_pos() - 4) / 2)):
                 p1 = (int(xx - self._staff_spacing), int(y + (i + 5) * self._staff_spacing))
                 p2 = (int(xx + self._staff_spacing), int(y + (i + 5) * self._staff_spacing))
                 cv2.line(self._canvas, p1, p2, (0, 0, 0), 1)
         # above basic staff
         if note.get_staff_pos() < -4:
-            for i in xrange(abs(note.get_staff_pos()) / 2 - 1):
+            for i in range(abs(note.get_staff_pos()) / 2 - 1):
                 p1 = (int(xx - self._staff_spacing), int(y - i * self._staff_spacing))
                 p2 = (int(xx + self._staff_spacing), int(y - i * self._staff_spacing))
                 cv2.line(self._canvas, p1, p2, (0, 0, 0), 1)
@@ -244,7 +244,7 @@ class SongPrinter:
         color = blue
         holes = note.get_holes()
         x = x + self._block_width / 2.0
-        for i in xrange(holes.__len__()):
+        for i in range(holes.__len__()):
             if i == 0:
                 # drawing a backside hole
                 xx = x + self._hole_radius
@@ -271,8 +271,23 @@ class SongPrinter:
 # A song is read from a given string and then visually represented on a page with default width.
 # If filename is specified, a picture is saved. In this instance the output file is GravityFallsExample.png
 
-song = RecorderSong("D E F A G A C D E F E G A G F")
-printer = SongPrinter(song, filename="GravityFallsExample.png")
+inuyasha = ""
+inuyasha = inuyasha + "D A G F E D C D A B C C B A G A "
+inuyasha = inuyasha + "D A G F E D C D D E F E D C E D "
+
+inuyasha = inuyasha + "D A G F E D C D A B C C B A G A "
+inuyasha = inuyasha + "D A G F E D C D D^ E^ F^ E^ D^ C^ E^ D^ "
+
+inuyasha = inuyasha + "F G A C B A G A F A G F G A C D C B A "
+inuyasha = inuyasha + "F G A C B A G A F A G D E F E F G F G A A "
+
+inuyasha = inuyasha + "D A G F E D C D A B C C B A G A "
+inuyasha = inuyasha + "D A G F E D C D D^ E^ F^ E^ D^ C^ E^ D^ "
+
+
+song = RecorderSong(inuyasha)
+#song = RecorderSong("D E F A G A C D E F E G A G F")
+printer = SongPrinter(song, 1024, filename="Inuyasha.png")
 
 # Example 2
 # Krusty Krabs theme read from file and printed on a page with width 1024px, which then saved as Spongebob.png
