@@ -272,16 +272,19 @@ class SongPrinter:
 # If filename is specified, a picture is saved. In this instance the output file is GravityFallsExample.png
 
 inuyasha = ""
-inuyasha = inuyasha + "D A G F E D C D A B C C B A G A "
+inuyasha = inuyasha + "D A G F E D C D A B C^ C^ B A G A "
 inuyasha = inuyasha + "D A G F E D C D D E F E D C E D "
 
-inuyasha = inuyasha + "D A G F E D C D A B C C B A G A "
+inuyasha = ""
+inuyasha = inuyasha + "D A G F E D C D A B C^ C^ B A G A "
 inuyasha = inuyasha + "D A G F E D C D D^ E^ F^ E^ D^ C^ E^ D^ "
 
+inuyasha = ""
 inuyasha = inuyasha + "F G A C B A G A F A G F G A C D C B A "
 inuyasha = inuyasha + "F G A C B A G A F A G D E F E F G F G A A "
 
-inuyasha = inuyasha + "D A G F E D C D A B C C B A G A "
+inuyasha = ""
+inuyasha = inuyasha + "D A G F E D C D A B C^ C^ B A G A "
 inuyasha = inuyasha + "D A G F E D C D D^ E^ F^ E^ D^ C^ E^ D^ "
 
 
